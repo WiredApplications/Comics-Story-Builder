@@ -75,16 +75,6 @@ namespace Comics_Story_Builder2
                     pb.BackgroundImageLayout = ImageLayout.Stretch;
                     pb.BackgroundImage = LoadAsset(r["AssetName"].ToString());
 
-
-                    //DEBUG
-                    //  if (pb.BackgroundImage == null)
-                    //  {
-                    //      MessageBox.Show("Image NOT FOUND: " + r["AssetName"].ToString());
-                    //  }
-                    // pb.BackColor = Color.Blue;
-
-                    ////
-
                     pbView.Controls.Add(pb);
                     imageMap.Add(Convert.ToInt64(r["Id"]), pb);
                 }
