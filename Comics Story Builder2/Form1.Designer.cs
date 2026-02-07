@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             label1 = new Label();
-            label2 = new Label();
             Save = new Button();
             View = new Button();
             NewPage = new Button();
@@ -43,66 +42,63 @@
             pictureBox1 = new PictureBox();
             ClearDatabase = new Button();
             Delete = new Button();
+            textBox1 = new TextBox();
+            button1 = new Button();
+            button2 = new Button();
+            label3 = new Label();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(160, 22);
+            label1.Font = new Font("Times New Roman", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(23, 21);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(80, 32);
+            label1.Size = new Size(357, 51);
             label1.TabIndex = 0;
-            label1.Text = "Assets";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(1090, 54);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(103, 32);
-            label2.TabIndex = 1;
-            label2.Text = "Controls";
+            label1.Text = "ComicStoryBuilder";
             // 
             // Save
             // 
-            Save.Font = new Font("Segoe UI", 11F);
-            Save.Location = new Point(1075, 115);
+            Save.BackColor = Color.Transparent;
+            Save.Font = new Font("Verdana", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Save.Location = new Point(1051, 102);
             Save.Margin = new Padding(4);
             Save.Name = "Save";
-            Save.Size = new Size(143, 56);
+            Save.Size = new Size(143, 50);
             Save.TabIndex = 2;
             Save.Text = "Save";
-            Save.UseVisualStyleBackColor = true;
+            Save.UseVisualStyleBackColor = false;
             Save.Click += Save_Click;
             // 
             // View
             // 
             View.AutoEllipsis = true;
-            View.Font = new Font("Segoe UI", 11F);
-            View.Location = new Point(1075, 282);
+            View.BackColor = Color.Transparent;
+            View.Font = new Font("Verdana", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            View.Location = new Point(1051, 160);
             View.Margin = new Padding(4);
             View.Name = "View";
-            View.Size = new Size(143, 56);
+            View.Size = new Size(143, 51);
             View.TabIndex = 3;
             View.Text = "View";
-            View.UseVisualStyleBackColor = true;
+            View.UseVisualStyleBackColor = false;
             View.Click += View_Click;
             // 
             // NewPage
             // 
-            NewPage.Font = new Font("Segoe UI", 11F);
-            NewPage.Location = new Point(1075, 200);
+            NewPage.BackColor = Color.Transparent;
+            NewPage.Font = new Font("Verdana", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            NewPage.Location = new Point(1051, 332);
             NewPage.Margin = new Padding(4);
             NewPage.Name = "NewPage";
-            NewPage.Size = new Size(143, 56);
+            NewPage.Size = new Size(143, 50);
             NewPage.TabIndex = 4;
-            NewPage.Text = "New Page";
-            NewPage.UseVisualStyleBackColor = true;
+            NewPage.Text = "Next ";
+            NewPage.UseVisualStyleBackColor = false;
             NewPage.Click += NewPage_Click;
             // 
             // Donald1
@@ -173,43 +169,113 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(444, 31);
+            pictureBox1.BackColor = Color.FloralWhite;
+            pictureBox1.Location = new Point(427, 102);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(589, 550);
+            pictureBox1.Size = new Size(589, 468);
             pictureBox1.TabIndex = 12;
             pictureBox1.TabStop = false;
             // 
             // ClearDatabase
             // 
             ClearDatabase.AutoEllipsis = true;
-            ClearDatabase.Font = new Font("Segoe UI", 11F);
-            ClearDatabase.Location = new Point(1075, 370);
+            ClearDatabase.BackColor = Color.Transparent;
+            ClearDatabase.Font = new Font("Verdana", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ClearDatabase.Location = new Point(1051, 273);
             ClearDatabase.Margin = new Padding(4);
             ClearDatabase.Name = "ClearDatabase";
-            ClearDatabase.Size = new Size(143, 56);
+            ClearDatabase.Size = new Size(143, 51);
             ClearDatabase.TabIndex = 13;
             ClearDatabase.Text = "Clear";
-            ClearDatabase.UseVisualStyleBackColor = true;
+            ClearDatabase.UseVisualStyleBackColor = false;
             ClearDatabase.Click += ClearDatabase_Click;
             // 
             // Delete
             // 
             Delete.AutoEllipsis = true;
-            Delete.Font = new Font("Segoe UI", 11F);
-            Delete.Location = new Point(1075, 453);
+            Delete.BackColor = Color.Transparent;
+            Delete.Font = new Font("Verdana", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Delete.Location = new Point(1051, 512);
             Delete.Margin = new Padding(4);
             Delete.Name = "Delete";
-            Delete.Size = new Size(143, 56);
+            Delete.Size = new Size(143, 50);
             Delete.TabIndex = 14;
             Delete.Text = "Delete";
-            Delete.UseVisualStyleBackColor = true;
+            Delete.UseVisualStyleBackColor = false;
             Delete.Click += Delete_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Font = new Font("Sitka Banner", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.Location = new Point(427, 21);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(589, 58);
+            textBox1.TabIndex = 15;
+            // 
+            // button1
+            // 
+            button1.AutoEllipsis = true;
+            button1.BackColor = Color.Transparent;
+            button1.Font = new Font("Verdana", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.Location = new Point(1051, 219);
+            button1.Margin = new Padding(4);
+            button1.Name = "button1";
+            button1.Size = new Size(143, 46);
+            button1.TabIndex = 16;
+            button1.Text = "Edit";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.AutoEllipsis = true;
+            button2.BackColor = Color.Transparent;
+            button2.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.Location = new Point(1051, 390);
+            button2.Margin = new Padding(4);
+            button2.Name = "button2";
+            button2.Size = new Size(143, 58);
+            button2.TabIndex = 17;
+            button2.Text = "Previous";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Yu Gothic UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(1066, 30);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(0, 38);
+            label3.TabIndex = 18;
+            // 
+            // button3
+            // 
+            button3.AutoEllipsis = true;
+            button3.BackColor = Color.Transparent;
+            button3.Font = new Font("Verdana", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.Location = new Point(1051, 456);
+            button3.Margin = new Padding(4);
+            button3.Name = "button3";
+            button3.Size = new Size(143, 48);
+            button3.TabIndex = 19;
+            button3.Text = "Resize";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1284, 603);
+            BackColor = Color.LightGoldenrodYellow;
+            ClientSize = new Size(1220, 601);
+            Controls.Add(button3);
+            Controls.Add(label3);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(textBox1);
             Controls.Add(Delete);
             Controls.Add(ClearDatabase);
             Controls.Add(pictureBox1);
@@ -222,7 +288,6 @@
             Controls.Add(NewPage);
             Controls.Add(View);
             Controls.Add(Save);
-            Controls.Add(label2);
             Controls.Add(label1);
             Font = new Font("Segoe UI", 11F);
             Margin = new Padding(4);
@@ -237,7 +302,6 @@
         #endregion
 
         private Label label1;
-        private Label label2;
         private Button Save;
         private Button View;
         private Button NewPage;
@@ -250,5 +314,10 @@
         private PictureBox pictureBox1;
         private Button ClearDatabase;
         private Button Delete;
+        private TextBox textBox1;
+        private Button button1;
+        private Button button2;
+        private Label label3;
+        private Button button3;
     }
 }
