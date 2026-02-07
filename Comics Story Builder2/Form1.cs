@@ -483,7 +483,7 @@ namespace Comics_Story_Builder2
                         if (dialog.ShowDialog() == DialogResult.OK)
                         {
                             ExportComicFromDatabase(selectedC, dialog.SelectedPath);
-                            View viewForm = new View(dialog.SelectedPath);
+                            View viewForm = new View(dialog.SelectedPath, selectedC);
                             viewForm.ShowDialog();
 
                         }

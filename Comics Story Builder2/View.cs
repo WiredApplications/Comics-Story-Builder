@@ -8,7 +8,7 @@ namespace Comics_Story_Builder2
         private string comicId;
         private int currentPage = 1;
 
-        public View(string folderPath)
+        public View(string folderPath, string comicID)
         {
             InitializeComponent();
 
@@ -16,22 +16,15 @@ namespace Comics_Story_Builder2
             this.MinimumSize = this.Size;
 
             baseFolder = folderPath;
-
-            string firstPage = Directory
-                .GetFiles(baseFolder, "*_page_*.png")
-                .FirstOrDefault();
-
-            if (firstPage == null)
+            comicId = comicID;
+            if (!File.Exists(GetPagePath(1)))
             {
-                MessageBox.Show("No comic pages found.");
+                MessageBox.Show($"Page 1 for comic \"{comicId}\" not found.");
                 Close();
                 return;
             }
 
-            string fileName = Path.GetFileNameWithoutExtension(firstPage);
-            comicId = fileName.Substring(0, fileName.IndexOf("_page_"));
-
-            LoadPage(currentPage);
+            LoadPage(1);
         }
 
         private void View_Load(object sender, EventArgs e)
