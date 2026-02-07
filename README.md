@@ -68,13 +68,8 @@ git clone https://github.com/yourusername/Comics-Story-Builder.git
 - Visual comic editor with drag-and-drop style asset placement
 - Multiple character and speech bubble assets
 - Resizable and movable elements using mouse interaction
-- Multi-page comic support
-- Z-order–preserving element rendering
-- Text input inside speech bubbles
-- Page navigation (next / previous)
 - Comic selection and editing mode
 - Full comic validation before export
-- Export comics as sequential PNG images
 - Dedicated viewer form for exported comics
 
 ---
@@ -97,17 +92,6 @@ The application uses **SQLite** as a local relational database to persist all co
   - Stores all visual elements (images and text)
   - Tracks position, size, z-order, and parent-child relationships
 
-### Key Concepts Demonstrated
-
-- Relational data modeling
-- Foreign key–style relationships
-- Parent-child hierarchy (speech bubbles → text)
-- Page reconstruction from database state
-- Idempotent saving using `INSERT OR IGNORE`
-- Page overwrite behavior with controlled deletes
-- SQL-based comic integrity validation
-
-This design allows pages to be reconstructed exactly as they were created, both for editing and for rendering to images.
 
 ---
 
