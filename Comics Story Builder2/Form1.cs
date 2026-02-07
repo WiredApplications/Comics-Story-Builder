@@ -32,7 +32,8 @@ namespace Comics_Story_Builder2
         public Form1()
         {
             InitializeComponent();
-
+            this.MaximumSize = this.Size;
+            this.MinimumSize = this.Size;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -487,6 +488,9 @@ namespace Comics_Story_Builder2
 
                         }
                     }
+                }else
+                {
+                    MessageBox.Show("This comic is missing pages!");
                 }
             }
 
@@ -845,7 +849,12 @@ namespace Comics_Story_Builder2
                         string fileName = Path.Combine(
                             folderPath,
                             $"{comicId}_page_{pageNumber:D2}.png");
+                        if (File.Exists(fileName))
+                        {
+                            File.Delete(fileName);
+                        }
 
+                        pageImage.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
                         pageImage.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
                         pageImage.Dispose();
                     }
@@ -906,30 +915,32 @@ namespace Comics_Story_Builder2
                             }
                             else if (type == "Text")
                             {
-                               
 
-                                 string text = reader["TextContent"].ToString();
-                                  long parentId = Convert.ToInt64(reader["ParentId"]);
 
-                                  Rectangle textBounds;
 
-                                  if (imageBounds.TryGetValue(parentId, out Rectangle parent))
-                                      textBounds = new Rectangle(parent.X + x, parent.Y + y, w, h);
-                                  else
-                                      textBounds = new Rectangle(x, y, w, h);
+                                
+                                    string text = reader["TextContent"].ToString();
+                                    long parentId = Convert.ToInt64(reader["ParentId"]);
 
-                                  MessageBox.Show(" " +x+ " " +y + " " +w + " " +h + " " +parent.X + " " +parent.Y);
-                                  using Font font = new Font("Arial", 12);
-                                  using Brush brush = Brushes.Black;
+                                    Rectangle textBounds;
+                                if (imageBounds.TryGetValue(parentId, out Rectangle parent))
+                                {
+                                    textBounds = new Rectangle(parent.X + x, parent.Y + y, w, h);
+                                    
+                                }
+                                else
+                                    textBounds = new Rectangle(x, y, w, h);
 
-                                  using StringFormat sf = new StringFormat
-                                  {
-                                      Alignment = StringAlignment.Near,
-                                      LineAlignment = StringAlignment.Near,
-                                      FormatFlags = StringFormatFlags.LineLimit
-                                  };
-                                  MessageBox.Show(text);
-                                  g.DrawString(text, font, brush, textBounds, sf); 
+                                    using Font font = new Font("Arial", 12);
+                                    Brush brush = Brushes.Black;
+                                    using StringFormat sf = new StringFormat
+                                    {
+                                        Alignment = StringAlignment.Near,
+                                        LineAlignment = StringAlignment.Near
+                                    };
+                                
+                                g.DrawString(text, font, brush, textBounds, sf);
+                                
                             }
 
                         }
