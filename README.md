@@ -5,16 +5,16 @@ A Windows Forms desktop application that allows users to visually create, edit, 
 ---
 
 ## Table of Contents
-- About
-- Getting Started
-- Prerequisites
-- Build and Run
-- Features
-- Data Persistence & SQL Design
-- Comic Export & Viewer
-- Project Structure
-- Technologies Used
-- License
+- [About](#about)
+- [Getting Started](#getting-started)
+- [Prerequisites](#prerequisites)
+- [Build and Run](#build-and-run)
+- [Features](#features)
+- [Data Persistence & SQL Design](#data-persistence--sql-design)
+- [Comic Export & Viewer](#comic-export--viewer)
+- [Project Structure](#project-structure)
+- [Technologies Used](#technologies-used)
+- [License](#license)
 
 ---
 
@@ -22,11 +22,7 @@ A Windows Forms desktop application that allows users to visually create, edit, 
 
 **Comics Story Builder** is a C# Windows Forms application designed to function as a lightweight comic editor and viewer.
 
-Users can visually construct comic pages by placing character images and text bubbles onto a canvas, resize and move elements freely, 
-
-and save each page into a structured SQLite database. Comics can later be reopened for editing, 
-
-validated for continuity, exported as image files, and viewed using a dedicated reader interface.
+Users can visually construct comic pages by placing character images and text bubbles onto a canvas, resize and move elements freely, and save each page into a structured SQLite database. Comics can later be reopened for editing, validated for continuity, exported as image files, and viewed using a dedicated reader interface.
 
 The project focuses heavily on **UI interaction**, **relational database design**, and **deterministic data loading**, demonstrating how visual editors can be backed by a normalized SQL schema.
 
@@ -72,8 +68,13 @@ git clone https://github.com/yourusername/Comics-Story-Builder.git
 - Visual comic editor with drag-and-drop style asset placement
 - Multiple character and speech bubble assets
 - Resizable and movable elements using mouse interaction
+- Multi-page comic support
+- Z-order–preserving element rendering
+- Text input inside speech bubbles
+- Page navigation (next / previous)
 - Comic selection and editing mode
 - Full comic validation before export
+- Export comics as sequential PNG images
 - Dedicated viewer form for exported comics
 
 ---
@@ -95,6 +96,18 @@ The application uses **SQLite** as a local relational database to persist all co
 - **Elements**
   - Stores all visual elements (images and text)
   - Tracks position, size, z-order, and parent-child relationships
+
+### Key Concepts Demonstrated
+
+- Relational data modeling
+- Foreign key–style relationships
+- Parent-child hierarchy (speech bubbles → text)
+- Page reconstruction from database state
+- Idempotent saving using `INSERT OR IGNORE`
+- Page overwrite behavior with controlled deletes
+- SQL-based comic integrity validation
+
+This design allows pages to be reconstructed exactly as they were created, both for editing and for rendering to images.
 
 ---
 
@@ -120,6 +133,7 @@ A separate **View** form acts as a comic reader:
 
 - Loads only pages for the selected comic
 - Deterministic file loading using Comic ID + page number
+- Next / Previous navigation
 - Scales pages automatically for display
 
 This separation ensures that viewing logic is isolated from editing logic.
@@ -146,6 +160,7 @@ The project follows a clear separation between:
 - **WinForms** for desktop UI
 - **SQLite** for relational data storage
 - **System.Data.SQLite** for database access
+- **System.Drawing** for rendering and image export
 - **SQL** (schema design, joins, constraints, validation queries)
 
 ---
