@@ -8,7 +8,7 @@ namespace Comics_Story_Builder2
     {
         Graphics g;
         Bitmap canvas;
-        
+
 
         bool resize, moving;
         int page = 1;
@@ -43,6 +43,9 @@ namespace Comics_Story_Builder2
             g.Clear(Color.White);
             pictureBox1.Image = canvas;
 
+
+
+
             label3.Text = "Page: " + page;
             string currentcomidID;
             Asset_Donald1 = Donald1.BackgroundImage;
@@ -61,12 +64,6 @@ namespace Comics_Story_Builder2
               { "textbubble1", Asset_Text1 },
               { "textbubble2", Asset_Text2 }
 };
-
-
-            /*DEBUG
-            if (Asset_Text2 == null)
-                MessageBox.Show("TextBubble1_Image is NULL");
-            */
 
         }
 
@@ -208,6 +205,7 @@ namespace Comics_Story_Builder2
 
 
         //Move - Change Size
+
         private void myPicture_MouseMove(object sender, MouseEventArgs e)
         {
             PictureBox pb = (PictureBox)sender;
@@ -217,7 +215,7 @@ namespace Comics_Story_Builder2
                 int newW = Math.Max(20, originalSize.Width + e.X - originalMouse.X);
                 int newH = Math.Max(20, originalSize.Height + e.Y - originalMouse.Y);
                 pb.Size = new Size(newW, newH);
-               
+
             }
             else if (moving)
             {
@@ -225,6 +223,7 @@ namespace Comics_Story_Builder2
                 pb.Top += e.Y - originalMouse.Y;
             }
         }
+
         private void myTextBox_MouseMove(object sender, MouseEventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -234,7 +233,7 @@ namespace Comics_Story_Builder2
                 int newW = Math.Max(40, originalSize.Width + e.X - originalMouse.X);
                 int newH = Math.Max(20, originalSize.Height + e.Y - originalMouse.Y);
                 tb.Size = new Size(newW, newH);
-                
+
             }
             else if (moving)
             {
@@ -253,11 +252,13 @@ namespace Comics_Story_Builder2
             resize = e.Location.X >= c.Width - 15 && e.Location.Y >= c.Height - 15;
             moving = !resize;
         }
+
         private void myAsset_MouseUp(object sender, MouseEventArgs e)
         {
             resize = false;
             moving = false;
         }
+
         private void myText_Click(object sender, EventArgs e)
         {
             TextBox temp = (TextBox)sender;
@@ -270,6 +271,7 @@ namespace Comics_Story_Builder2
                 temp.BorderStyle = BorderStyle.None;
             }
         }
+
         private void myAsset_Click(object sender, EventArgs e)
         {
             PictureBox temp = (PictureBox)sender;
@@ -288,7 +290,7 @@ namespace Comics_Story_Builder2
         //Controls
 
 
-
+        //New Page - Next
         private void NewPage_Click(object sender, EventArgs e)
         {
 
@@ -297,7 +299,6 @@ namespace Comics_Story_Builder2
             label3.Text = "Page: " + page;
             if (button1.Text == "Editing" && ComicPageExists(currentcomidID, page))
             {
-
                 LoadComicPage(currentcomidID, page);
             }
             else
@@ -305,15 +306,16 @@ namespace Comics_Story_Builder2
                 g.Clear(Color.White);
                 pictureBox1.Invalidate();
                 pictureBox1.Controls.Clear();
+
             }
 
 
         }
 
-
         //Save
         private void Save_Click(object sender, EventArgs e)
         {
+
             string comicId;
             if (button1.Text == "Edit")
             {
@@ -466,11 +468,10 @@ namespace Comics_Story_Builder2
             textBox1.PlaceholderText = "Enter Comic Name";
         }
 
-
-
         //View
         private void View_Click(object sender, EventArgs e)
         {
+
             string selectedC = ShowComicPicker(GetAllComicIds());
             if (selectedC != null)
             {
@@ -488,44 +489,40 @@ namespace Comics_Story_Builder2
 
                         }
                     }
-                }else
+                }
+                else
                 {
                     MessageBox.Show("This comic is missing pages!");
                 }
             }
 
-           
-        }
-        private bool IsExportable(string comicId)
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                SQLiteCommand c = new SQLiteCommand(@" 
-                SELECT
-              CASE
-                WHEN MIN(PageNumber) = 1
-                AND MAX(PageNumber) - MIN(PageNumber) + 1 = COUNT(DISTINCT PageNumber)
-                THEN 1
-                ELSE 0
-                   END
-                FROM Pages
-                WHERE ComicId = @cid;
 
-                    
-                    ", connection);
-                c.Parameters.AddWithValue("@cid", comicId);
-                object result = c.ExecuteScalar();
-                if (result == DBNull.Value || result == null)
-                    return false;
-                return Convert.ToInt32(result) ==1;
+        }
+
+        //Edit 
+        private void button1_Click(object sender, EventArgs e)
+        {
+   
+            List<string> comics = GetAllComicIds();
+            if (comics.Count > 0)
+            {
+                string selected = ShowComicPicker(comics);
+                if (selected != null)
+                {
+                    LoadComicPage(selected, page);
+                    button1.Text = "Editing";
+                }
+            }
+            else
+            {
+                MessageBox.Show("There are no saved comics");
             }
         }
-
 
         //Clear
         private void ClearDatabase_Click(object sender, EventArgs e)
         {
+
             DialogResult result = MessageBox.Show(
                 "This will delete every comic.\nAre you sure?",
                 "Delete All Comics",
@@ -565,7 +562,7 @@ namespace Comics_Story_Builder2
             MessageBox.Show("All comics deleted.\nDatabase reset.");
         }
 
-
+        //Delete
         private void Delete_Click(object sender, EventArgs e)
         {
             if (Delete.Text == "Delete")
@@ -578,6 +575,78 @@ namespace Comics_Story_Builder2
             }
         }
 
+        //Resize
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (button3.Text == "Resize")
+            {
+                button3.Text = "Resizing";
+                resize = true;
+            }
+            else
+            {
+                button3.Text = "Resize";
+                resize = false;
+            }
+        }
+
+        //Previous
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (page > 1)
+            {
+                page--;
+                label3.Text = "Page: " + page;
+                if (button1.Text == "Editing" && ComicPageExists(currentcomidID, page))
+                {
+
+                    LoadComicPage(currentcomidID, page);
+                }
+                else
+                {
+                    g.Clear(Color.White);
+                    pictureBox1.Invalidate();
+
+                    pictureBox1.Controls.Clear();
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("This is the first Page!");
+            }
+        }
+
+
+
+        //Database
+
+
+        private bool IsExportable(string comicId)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                SQLiteCommand c = new SQLiteCommand(@" 
+                SELECT
+              CASE
+                WHEN MIN(PageNumber) = 1
+                AND MAX(PageNumber) - MIN(PageNumber) + 1 = COUNT(DISTINCT PageNumber)
+                THEN 1
+                ELSE 0
+                   END
+                FROM Pages
+                WHERE ComicId = @cid;
+
+                    
+                    ", connection);
+                c.Parameters.AddWithValue("@cid", comicId);
+                object result = c.ExecuteScalar();
+                if (result == DBNull.Value || result == null)
+                    return false;
+                return Convert.ToInt32(result) == 1;
+            }
+        }
 
         private void LoadComicPage(string comicId, int pageNumber)
         {
@@ -698,23 +767,6 @@ namespace Comics_Story_Builder2
             textBox1.PlaceholderText = "Currently Editing: " + currentcomidID;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            List<string> comics = GetAllComicIds();
-            if (comics.Count > 0)
-            {
-                string selected = ShowComicPicker(comics);
-                if (selected != null)
-                {
-                    LoadComicPage(selected, page);
-                    button1.Text = "Editing";
-                }
-            }
-            else
-            {
-                MessageBox.Show("There are no saved comics");
-            }
-        }
         public static string ShowComicPicker(List<string> comicIds)
         {
             Form form = new Form();
@@ -750,6 +802,7 @@ namespace Comics_Story_Builder2
 
             return null;
         }
+
         private List<string> GetAllComicIds()
         {
             List<string> comics = new List<string>();
@@ -774,31 +827,6 @@ namespace Comics_Story_Builder2
             return comics;
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (page > 1)
-            {
-                page--;
-                label3.Text = "Page: " + page;
-                if (button1.Text == "Editing" && ComicPageExists(currentcomidID, page))
-                {
-
-                    LoadComicPage(currentcomidID, page);
-                }
-                else
-                {
-                    g.Clear(Color.White);
-                    pictureBox1.Invalidate();
-
-                    pictureBox1.Controls.Clear();
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("This is the first Page!");
-            }
-        }
         private bool ComicPageExists(string comicId, int pageNumber)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -816,15 +844,6 @@ namespace Comics_Story_Builder2
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            
-            
-                button3.Text = "Resizing";
-                resize = true;
-            
-              
-        }
         private void ExportComicFromDatabase(string comicId, string folderPath)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -861,6 +880,7 @@ namespace Comics_Story_Builder2
                 }
             }
         }
+
         private Bitmap RenderPageFromDatabase(long pageId)
         {
             Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -881,7 +901,7 @@ namespace Comics_Story_Builder2
                     using (SQLiteDataReader reader = cmd.ExecuteReader())
                     {
                         Dictionary<long, Rectangle> imageBounds = new();
-                       
+
                         while (reader.Read())
                         {
                             long id = (long)reader["Id"];
@@ -891,26 +911,26 @@ namespace Comics_Story_Builder2
                             int y = Convert.ToInt32(reader["Y"]);
                             int w = Convert.ToInt32(reader["Width"]);
                             int h = Convert.ToInt32(reader["Height"]);
-                            
 
-                           
+
+
                             if (type == "Image")
                             {
 
-                                
-                                
-                                 string assetName = reader["AssetName"].ToString();
-
-                                  if (assetLibrary.TryGetValue(assetName, out Image img))
-                                  {
-                                      Rectangle imgRect = new Rectangle(x, y, w, h);
-
-                                      using Image imgClone = (Image)img.Clone();
-                                      g.DrawImage(imgClone, imgRect);
 
 
-                                      imageBounds[id] = imgRect;
-                                  } 
+                                string assetName = reader["AssetName"].ToString();
+
+                                if (assetLibrary.TryGetValue(assetName, out Image img))
+                                {
+                                    Rectangle imgRect = new Rectangle(x, y, w, h);
+
+                                    using Image imgClone = (Image)img.Clone();
+                                    g.DrawImage(imgClone, imgRect);
+
+
+                                    imageBounds[id] = imgRect;
+                                }
 
                             }
                             else if (type == "Text")
@@ -918,29 +938,29 @@ namespace Comics_Story_Builder2
 
 
 
-                                
-                                    string text = reader["TextContent"].ToString();
-                                    long parentId = Convert.ToInt64(reader["ParentId"]);
 
-                                    Rectangle textBounds;
+                                string text = reader["TextContent"].ToString();
+                                long parentId = Convert.ToInt64(reader["ParentId"]);
+
+                                Rectangle textBounds;
                                 if (imageBounds.TryGetValue(parentId, out Rectangle parent))
                                 {
                                     textBounds = new Rectangle(parent.X + x, parent.Y + y, w, h);
-                                    
+
                                 }
                                 else
                                     textBounds = new Rectangle(x, y, w, h);
 
-                                    using Font font = new Font("Arial", 12);
-                                    Brush brush = Brushes.Black;
-                                    using StringFormat sf = new StringFormat
-                                    {
-                                        Alignment = StringAlignment.Near,
-                                        LineAlignment = StringAlignment.Near
-                                    };
-                                
+                                using Font font = new Font("Arial", 12);
+                                Brush brush = Brushes.Black;
+                                using StringFormat sf = new StringFormat
+                                {
+                                    Alignment = StringAlignment.Near,
+                                    LineAlignment = StringAlignment.Near
+                                };
+
                                 g.DrawString(text, font, brush, textBounds, sf);
-                                
+
                             }
 
                         }
